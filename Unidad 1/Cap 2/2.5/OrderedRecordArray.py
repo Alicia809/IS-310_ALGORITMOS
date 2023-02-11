@@ -2,10 +2,11 @@
 def identity(x): # La función identidad
     return x
 class OrderedRecordArray(object):
-    def __init__(self, initialSize, key=identity): # Constructor
+    #Este se modifica con el ejercicio 2.5
+    """def __init__(self, initialSize, key=identity): # Constructor
         self.__a = [None] * initialSize #  La matriz almacenada como una lista
         self.__nItems = 0 # No hay elementos en la matriz inicialmente
-        self.__key = key # La función de tecla obtiene la clave de registro
+        self.__key = key # La función de tecla obtiene la clave de registro"""
     
     def __len__(self):  # Definición especial para la función len()
         return self.__nItems  # Número de devolución de artículos
@@ -65,11 +66,34 @@ class OrderedRecordArray(object):
             return False # Hecho aquí; objeto no encontrado
         
     #AGREGADO 2.5
-    def merge(self, item): # Eliminar cualquier ocurrencia
-        j = self.find(self.__key(item))  # Intenta encontrar el item
-        if j < self.__nItems and self.__a[j] == item: # Si se encuentra,
-            self.__nItems -= 1 # Uno menos al final
-            for k in range(j, self.__nItems): # Mover elementos más grandes a la izquierda
-                self.__a[k] = self.__a[k+1]
-                return True # Devuelve el indicador de éxito
-            return False # Hecho aquí; objeto no encontrado
+    def __init__(self, key_func, records):
+        self.key_func = key_func
+        self.records = sorted(records, key=key_func)
+
+    def merge(self, other):
+        if self.key_func != other.key_func:
+            raise ValueError("Cannot merge arrays with different key functions")
+        # Create a new list big enough to hold the current list and the merging list
+        merged_records = [None] * (len(self.records) + len(other.records))
+        i = j = k = 0
+        while i < len(self.records) and j < len(other.records):
+            if self.key_func(self.records[i]) < self.key_func(other.records[j]):
+                merged_records[k] = self.records[i]
+                i += 1
+            else:
+                merged_records[k] = other.records[j]
+                j += 1
+            k += 1
+        # Copy remaining elements of the current list
+        while i < len(self.records):
+            merged_records[k] = self.records[i]
+            i += 1
+            k += 1
+
+        # Copy remaining elements of the merging list
+        while j < len(other.records):
+            merged_records[k] = other.records[j]
+            j += 1
+            k += 1
+
+        self.records = merged_records

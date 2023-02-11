@@ -2,10 +2,11 @@
 def identity(x): # La función identidad
     return x
 class OrderedRecordArray(object):
-    def __init__(self, initialSize, key=identity): # Constructor
+    #Se modifica con el ejercicio 2.6
+    """def __init__(self, initialSize, key=identity): # Constructor
         self.__a = [None] * initialSize #  La matriz almacenada como una lista
         self.__nItems = 0 # No hay elementos en la matriz inicialmente
-        self.__key = key # La función de tecla obtiene la clave de registro
+        self.__key = key # La función de tecla obtiene la clave de registro"""
     
     def __len__(self):  # Definición especial para la función len()
         return self.__nItems  # Número de devolución de artículos
@@ -55,13 +56,26 @@ class OrderedRecordArray(object):
             self.__a[j] = item # Insertar el artículo
             self.__nItems += 1 # Incrementa el número de elementos
     
-    def delete(self, item): # Eliminar cualquier ocurrencia
+    #Se modifica con el ejercicio 2.6
+    """def delete(self, item): # Eliminar cualquier ocurrencia
         j = self.find(self.__key(item))  # Intenta encontrar el item
         if j < self.__nItems and self.__a[j] == item: # Si se encuentra,
             self.__nItems -= 1 # Uno menos al final
             for k in range(j, self.__nItems): # Mover elementos más grandes a la izquierda
                 self.__a[k] = self.__a[k+1]
                 return True # Devuelve el indicador de éxito
-            return False # Hecho aquí; objeto no encontrado
+            return False # Hecho aquí; objeto no encontrado"""
         
     #AGREGADO 2.6
+    def __init__(self, key_func, records):
+        self.key_func = key_func
+        self.records = sorted(records, key=key_func)
+
+    def delete(self, item):
+        index = None
+        for i, record in enumerate(self.records):
+            if self.key_func(record) == item:
+                index = i
+                break
+            if index is not None:
+                self.records = self.records[:index] + self.records[index+1:]

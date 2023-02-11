@@ -2,10 +2,11 @@
 def identity(x): # La función identidad
     return x
 class OrderedRecordArray(object):
-    def __init__(self, initialSize, key=identity): # Constructor
+    #Estos se modifican para el ejercicio 2.7
+    """def __init__(self, initialSize, key=identity): # Constructor
         self.__a = [None] * initialSize #  La matriz almacenada como una lista
         self.__nItems = 0 # No hay elementos en la matriz inicialmente
-        self.__key = key # La función de tecla obtiene la clave de registro
+        self.__key = key # La función de tecla obtiene la clave de registro"""
     
     def __len__(self):  # Definición especial para la función len()
         return self.__nItems  # Número de devolución de artículos
@@ -64,13 +65,17 @@ class OrderedRecordArray(object):
                 self.__a[k] = self.__a[k+1]
                 return True # Devuelve el indicador de éxito
             return False # Hecho aquí; objeto no encontrado
-        
-    #AGREGADO 2.7
-    def insert(self, item): # Insertar elemento en la posición correcta
-        if self.__nItems >= len(self.__a): # Si la matriz está llena,
-            raise Exception("Array overflow") # generar excepción
-        j = self.find(self.__key(item)) # Encuentra dónde debe ir el elemento
-        for k in range(self.__nItems, j, -1): # Mover elementos más grandes a la derecha
-            self.__a[k] = self.__a[k-1]
-            self.__a[j] = item # Insertar el artículo
-            self.__nItems += 1 # Incrementa el número de elementos
+            
+    #APARTADO 2.7    
+    def __init__(self, key_func, records, max_size=10, grow_factor=1.5):
+        self.key_func = key_func
+        self.records = sorted(records, key=key_func)
+        self.max_size = max_size
+        self.grow_factor = grow_factor
+
+    def insert(self, record):
+        if len(self.records) == self.max_size:
+            self.max_size = int(self.max_size * self.grow_factor)
+            self.records = self.records + [None] * (self.max_size - len(self.records))
+            self.records[len(self.records)] = record
+            self.records = sorted(self.records, key=self.key_func)

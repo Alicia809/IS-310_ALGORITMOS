@@ -1,7 +1,7 @@
-from OrderedRecordArray import *
+from OrderedArray import *
 
 maxSize = 11                  # Max size of the array
-arr = OrderedRecordArray(maxSize)   # Create the array object
+arr = OrderedArray(maxSize)   # Create the array object
 
 arr.insert(77)                # Insert maxSize items
 arr.insert(99)

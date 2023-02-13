@@ -89,25 +89,13 @@ class Array(object):
             inner -= 1                # shift item to right
          self.__a[inner] = temp       # Move marked item to 'hole'
 
-   #EJERCICIO 3.1
-   def bubbleSort2(self):               # Ordenar comparando valores adyacentes
-      left = 0                      #Para controlar los limites de las pasadas
-      right = self.__nItems - 1     #Para controlar los limites de las pasadas
-      swapped = True
-      while swapped:
-         swapped = False
-         #Desde el inicio hasta el final de la lista
-         for inner in range(left, right):
-               if self.__a[inner] < self.__a[inner+1]:
-                  self.swap(inner, inner+1)
-                  swapped = True
-         right -= 1
-         if not swapped:
-               break
-         swapped = False
-         #Desde el final hasta el inicio de la lista
-         for inner in range(right, left, -1):
-               if self.__a[inner-1] < self.__a[inner]:
-                  self.swap(inner-1, inner)
-                  swapped = True
-         left += 1
+   #Ejercicio 3.2
+   def mediana(self):   #Encontrar la mediana de la matriz
+      #self.sort()       #Ordenar la lista
+      n = self.__nItems
+      if n % 2 == 0:
+         return (self.__a[n//2 - 1] + self.__a[n//2]) / 2
+      else:
+         return self.__a[n//2]
+
+

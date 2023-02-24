@@ -33,13 +33,12 @@ for test in ['initArray().bubbleSort()',
              'initArray().insertionSort()']:
     elapsed = timeit.timeit(test, number=10, globals=globals())
     print(test, "took", elapsed, "seconds", flush=True)
+#LISTA NORMAL
+arr.traverse()
+print('La matriz desordenada contiene:\n', arr)
 
-arr.insertionSort()
-print('La matriz ordenada contiene:\n', arr)
-
-# Convertir el arreglo a una lista y enviarla a Google Sheets
-arr2 = [arr.tolist()]# Convertir el arreglo a una lista de listas con un elemento por lista
-values = [[arr2[i]] for i in range(len(arr2))]
+# Convertir el arreglo a una lista de listas con un elemento por sublista
+values = [[arr.get(i)] for i in range(len(arr))]
 
 # Especificar la dirección de la celda para cada valor
 range_ ='A1:A' + str(len(arr))
@@ -47,6 +46,25 @@ range_ ='A1:A' + str(len(arr))
 # Llamamos a la api para insertar los valores
 result = sheet.values().append(spreadsheetId=SPREADSHEET_ID,
 							range=range_,
+							valueInputOption='USER_ENTERED',
+							body={'values':values}).execute()
+print(f"Datos insertados correctamente.\n{(result.get('updates').get('updatedCells'))}")
+
+
+
+#BUBBLE
+arr.bubbleSort()
+print('La matriz ordenada por bubbleSort contiene:\n', arr)
+
+# Convertir el arreglo a una lista de listas con un elemento por sublista
+values = [[arr.get(i)] for i in range(len(arr))]
+
+# Especificar la dirección de la celda para cada valor
+range2_ ='B1:B' + str(len(arr))
+
+# Llamamos a la api para insertar los valores
+result = sheet.values().append(spreadsheetId=SPREADSHEET_ID,
+							range=range2_,
 							valueInputOption='USER_ENTERED',
 							body={'values':values}).execute()
 print(f"Datos insertados correctamente.\n{(result.get('updates').get('updatedCells'))}")

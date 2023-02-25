@@ -1,0 +1,14 @@
+*En una terminal, nos situamos en el directorio 
+donde pusimos nuestro archivo de key.json
+
+*Empezamos creando un ambiente virtual y lo activamos.
+
+python -m venv venv
+.\venv\Scripts\activate
+
+*Lo siguiente que debemos hacer es instalar las dependencias
+necesarias para conectarnos a Google Cloud.
+
+pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+
+*¡LISTO!

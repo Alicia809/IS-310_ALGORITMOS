@@ -1,0 +1,4 @@
+Este es un archivo de texto de muestra.
+Contiene algunas palabras que se contarán usando una tabla hash.
+Las palabras no distinguen entre mayúsculas y minúsculas, por lo que "Esto" y "esto" se contarán como la misma palabra.
+La palabra "archivo" aparece solo una vez en este texto.
